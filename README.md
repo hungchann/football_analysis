@@ -7,17 +7,17 @@ The goal of this project is to detect and track players, referees, and footballs
 
 ## Modules Used
 The following modules are used in this project:
-- YOLO: AI object detection model
+- YOLO: AI object detection model  
 - Kmeans: Pixel segmentation and clustering to detect t-shirt color
 - Optical Flow: Measure camera movement
-- Perspective Transformation: Represent scene depth and perspective
+- Perspective Transformation: Represent scene depth and perspective  
 - Speed and distance calculation per player
 
 ## Trained Models
 - [Trained Yolo v5](https://drive.google.com/file/d/1DC2kCygbBWUKheQ_9cFziCsYVSRw6axK/view?usp=sharing)
 
 ## Sample video
--  [Sample input video](https://drive.google.com/file/d/1t6agoqggZKx6thamUuPAIdN_1zR9v9S_/view?usp=sharing)
+- [Sample input video](https://drive.google.com/file/d/1t6agoqggZKx6thamUuPAIdN_1zR9v9S_/view?usp=sharing)
 
 ## Requirements
 To run this project, you need to have the following requirements installed:
@@ -28,3 +28,50 @@ To run this project, you need to have the following requirements installed:
 - NumPy
 - Matplotlib
 - Pandas
+
+
+## Requirements
+To run this project, you need to have the following requirements installed:
+- Python 3.x
+- ultralytics
+- supervision
+- OpenCV
+- NumPy
+- Matplotlib
+- Pandas
+
+## Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/hungchann/football_analysis.git
+cd football_analysis
+```
+
+2. Create and activate a virtual environment (recommended):
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+
+3. Install the required packages:
+```bash
+pip install -r requirements.txt
+```
+
+4. Download the trained model:
+   - Download the [Trained Yolo v5 model](https://drive.google.com/file/d/1DC2kCygbBWUKheQ_9cFziCsYVSRw6axK/view?usp=sharing)
+   - Place it in the `models` directory
+
+5. Download a sample video:
+   - Download the [Sample input video](https://drive.google.com/file/d/1t6agoqggZKx6thamUuPAIdN_1zR9v9S_/view?usp=sharing)
+   - Place it in the `input_videos` directory
+
+## Usage
+
+Run the main analysis script:
+```bash
+python3 main.py
+```
+
+The analyzed video will be saved in the `output_videos` directory.

@@ -1,2 +1,26 @@
 *__pycahce__*
 *.pyc
+*.venv*
+
+# Video files
+*.mp4
+*.avi
+*.mov
+*.wmv
+*.flv
+*.mkv
+
+# Model files
+*.h5
+*.hdf5
+*.pkl
+*.pth
+*.onnx
+*.pb
+*.tflite
+*.mlmodel
+*.pt
+model/
+saved_models/
+weights/
+checkpoints/
