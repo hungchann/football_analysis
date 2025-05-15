@@ -26,6 +26,10 @@ class Tracker:
                     tracks[object][frame_num][track_id]['position'] = position
 
     def interpolate_ball_positions(self,ball_positions):
+        ''' khoanh vung bong
+            @param ball_positions: tham so
+        '''
+        
         ball_positions = [x.get(1,{}).get('bbox',[]) for x in ball_positions]
         df_ball_positions = pd.DataFrame(ball_positions,columns=['x1','y1','x2','y2'])
 
@@ -103,7 +107,7 @@ class Tracker:
 
         return tracks
     
-    def draw_ellipse(self,frame,bbox,color,track_id=None):
+    def draw_ellipse(self,frame,bbox,color,track_id=None,box_color=None):
         y2 = int(bbox[3])
         x_center, _ = get_center_of_bbox(bbox)
         width = get_bbox_width(bbox)
@@ -128,10 +132,12 @@ class Tracker:
         y2_rect = (y2+ rectangle_height//2) +15
 
         if track_id is not None:
+            # Use box_color if provided, otherwise use the team color
+            rect_color = box_color if box_color is not None else color
             cv2.rectangle(frame,
                           (int(x1_rect),int(y1_rect) ),
                           (int(x2_rect),int(y2_rect)),
-                          color,
+                          rect_color,
                           cv2.FILLED)
             
             x1_text = x1_rect+12
@@ -195,7 +201,16 @@ class Tracker:
             # Draw Players
             for track_id, player in player_dict.items():
                 color = player.get("team_color",(0,0,255))
-                frame = self.draw_ellipse(frame, player["bbox"],color, track_id)
+                # Get custom box color if set, otherwise None
+                box_color = player.get("box_color", None)
+                
+                # Convert numpy array to tuple if needed
+                if hasattr(color, 'tolist'):
+                    color = tuple(color.tolist())
+                if hasattr(box_color, 'tolist'):
+                    box_color = tuple(box_color.tolist())
+                    
+                frame = self.draw_ellipse(frame, player["bbox"], color, track_id, box_color)
 
                 if player.get('has_ball',False):
                     frame = self.draw_traingle(frame, player["bbox"],(0,0,255))

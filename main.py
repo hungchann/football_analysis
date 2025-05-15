@@ -10,7 +10,7 @@ from speed_and_distance_estimator import SpeedAndDistance_Estimator
 
 
 def main():
-    # Read Video
+      # Read Video
     video_frames = read_video('input_videos/08fd33_4.mp4')
 
     # Initialize Tracker
@@ -43,16 +43,27 @@ def main():
 
     # Assign Player Teams
     team_assigner = TeamAssigner()
-    team_assigner.assign_team_color(video_frames[0], 
-                                    tracks['players'][0])
     
+    # Example: Set custom team colors if desired
+    # team_assigner.set_team_colors([255, 0, 0], [0, 0, 255])  # Red for team 1, Blue for team 2
+    
+    # Example: Set custom box colors (different from team colors)
+    team_assigner.set_box_colors([78, 255, 0], [244, 255, 1])  # Green for team 1 boxes, Yellow for team 2 boxes
+    
+    # Initialize team colors based on first frame
+    team_assigner.assign_team_color(video_frames[0], tracks['players'][0])
+    
+    # Assign teams and colors to players across all frames
     for frame_num, player_track in enumerate(tracks['players']):
         for player_id, track in player_track.items():
-            team = team_assigner.get_player_team(video_frames[frame_num],   
-                                                 track['bbox'],
-                                                 player_id)
-            tracks['players'][frame_num][player_id]['team'] = team 
-            tracks['players'][frame_num][player_id]['team_color'] = team_assigner.team_colors[team]
+            # Get team assignment for this player
+            team = team_assigner.get_player_team(video_frames[frame_num], 
+                                                track['bbox'],
+                                                player_id)
+            
+            # Update player track with team and color information
+            tracks['players'][frame_num][player_id] = team_assigner.update_player_colors(
+                tracks['players'][frame_num][player_id], team)
 
     
     # Assign Ball Aquisition
